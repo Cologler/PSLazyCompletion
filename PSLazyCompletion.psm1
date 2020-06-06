@@ -22,12 +22,18 @@ $argumentCompletersProperty = $internalExecutionContext.GetType().GetProperty(
     [System.Reflection.BindingFlags]'NonPublic, Instance'
 )
 
+$loaded = New-Object System.Collections.Generic.HashSet[string]
+
 if (Test-Path $completionsPath -PathType Container) {
     Get-ChildItem -Path $completionsPath -Filter *.ps1 |
     ForEach-Object {
         $baseName = $_.BaseName;
         $scriptPath = [System.IO.Path]::Combine($completionsPath, "$baseName.ps1")
         Register-ArgumentCompleter -Native -CommandName $baseName -ScriptBlock {
+            if (!$loaded.Add($baseName)) {
+                return;
+            }
+
             . $scriptPath
 
             $argumentCompleters = $argumentCompletersProperty.GetGetMethod($true).Invoke(
