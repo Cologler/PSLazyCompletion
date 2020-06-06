@@ -9,7 +9,7 @@
 - Import too many completion modules in `$profile` may cause performance problem.
 - You won't run all commands in every session so why do you load unnecessary completions everytime?
 
-PSLazyCompletion only load completion script when you need it.
+PSLazyCompletion only load completion script when you pressed the <kbd>tab</kbd>.
 
 ### Keep `$profile` simple
 
