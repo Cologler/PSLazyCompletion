@@ -25,7 +25,7 @@ $argumentCompletersProperty = $internalExecutionContext.GetType().GetProperty(
 $loaded = New-Object System.Collections.Generic.HashSet[string]
 
 if (Test-Path $completionsPath -PathType Container) {
-    Get-ChildItem -Path $completionsPath -Filter *.ps1 -Recurse -File |
+    Get-ChildItem -Path $completionsPath -Filter *.ps1 -Recurse -File -FollowSymlink |
     ForEach-Object {
         $baseName = $_.BaseName;
         $scriptPath = $_.FullName
