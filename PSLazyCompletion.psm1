@@ -25,10 +25,10 @@ $argumentCompletersProperty = $internalExecutionContext.GetType().GetProperty(
 $loaded = New-Object System.Collections.Generic.HashSet[string]
 
 if (Test-Path $completionsPath -PathType Container) {
-    Get-ChildItem -Path $completionsPath -Filter *.ps1 |
+    Get-ChildItem -Path $completionsPath -Filter *.ps1 -Recurse -File |
     ForEach-Object {
         $baseName = $_.BaseName;
-        $scriptPath = [System.IO.Path]::Combine($completionsPath, "$baseName.ps1")
+        $scriptPath = $_.FullName
         Register-ArgumentCompleter -Native -CommandName $baseName -ScriptBlock {
             if (!$loaded.Add($baseName)) {
                 return;
